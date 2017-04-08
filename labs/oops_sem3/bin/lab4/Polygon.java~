@@ -1,0 +1,144 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+public class Polygon {
+	
+private static ArrayList<Double> xcoordinate = new ArrayList<Double>();
+private static ArrayList<Double> ycoordinate = new ArrayList<Double>();
+private double peri_meter = 0.0; 
+	           
+	           public Polygon()
+	           {
+	        	   
+	        	   
+	           }// THE CONSTRUCTOR IS PASSING NO ARGUMENT
+	           	           
+	           public void addPoint(double a,double b)
+	           {
+	               xcoordinate.add(a);
+	               ycoordinate.add(b);
+	           }      
+	            
+	           public void addPoint(java.awt.geom.Point2D Double)
+	           {
+	        	   
+	        	   
+	        	   
+	        	   
+	           }
+	           
+	           public double perimeter()
+	           {
+	        	   int flag = xcoordinate.size();
+	              
+	               if (flag < 3) 
+	               {
+	            	    System.out.println(" The Perimeter of the polygon cannot be found ");
+	            	    return 0.0;
+	               }
+	              
+	               else
+	               {          
+	                     for(int i = 0 ; i <= flag - 1 ; i++)
+	                     {
+	                         double temp = 0;
+	                         if ( i != flag-1 )
+	                         {
+	                             temp = (xcoordinate.get(i) - xcoordinate.get(i+1))*(xcoordinate.get(i) - xcoordinate.get(i+1))+(ycoordinate.get(i) - ycoordinate.get(i+1))*(ycoordinate.get(i) - ycoordinate.get(i+1));
+	                             temp = Math.sqrt(temp);
+	                         }     
+	                         else 
+	                         {
+	                             temp = (xcoordinate.get(i) - xcoordinate.get(0))*(xcoordinate.get(i) - xcoordinate.get(0))+(ycoordinate.get(i) - ycoordinate.get(0))*(ycoordinate.get(i) - ycoordinate.get(0));
+	                             temp = Math.sqrt(temp);
+	                         }
+	                         peri_meter = temp + peri_meter;
+	                     }
+	                     return peri_meter;
+	                 }
+	             }// TO CREATE THE PERIMETER OF POLYGON
+
+	          public double area() 
+	          {
+	                double temp=0.0,total=0.0;
+	                int n=xcoordinate.size();
+	                if (xcoordinate.size() >= 3)
+	                {	   
+	                	 for(int i=0 ; i<n ;i++)
+	                	 {
+	                		  if(i == n-1)
+	                		  temp = determinant.calc(xcoordinate.get(i),ycoordinate.get(i),xcoordinate.get(0),ycoordinate.get(0));	  
+	                		  else
+	                		  temp = determinant.calc(xcoordinate.get(i),ycoordinate.get(i),xcoordinate.get(i+1),ycoordinate.get(i+1));		   
+	                		  total += temp;	  
+	                	 
+	                	 }	 
+	                }
+	                return (total/2);
+	              
+	          } // TO CALCULATE THE AREA OF TRIANGLE
+	          
+	          
+	   
+	          public void print(java.io.PrintStream out)
+	          { 
+	        	  
+	        	  for(int i=0 ;i < xcoordinate.size() ; i++)
+	        	  {
+	        		  System.out.print("x[" + (i+1) + "], y[" + (i+1) + "] = (" + xcoordinate.get(i) + "," + ycoordinate.get(i) + ")\n");
+	        	  }        	  
+	        	  
+	        	  
+	          }// TO PRINT ALL VERTICES OF POLYGON
+
+	          
+	          public static void main(String[] args)			// MAIN FUNCTION
+	      	{
+	      		Polygon p = new Polygon();
+	      		int n;
+	      		System.out.println("****PLEASE ENTER THE NUMBER OF POINTS****");
+	      		Scanner input = new Scanner(System.in);
+	      		n = input.nextInt();
+	      		for(int i = 0;i<n;i++)
+	      		{	System.out.println("** ENTER THE X COORDINATE **");
+	      			double x1=input.nextDouble();
+	      			System.out.println("** ENTER THE Y COORDINATE **");
+	      			double y1=input.nextDouble();
+	                  p.addPoint(x1,y1) ;
+	      		}
+	      		int t=1;
+	      		while(t==1)	
+	      		{	int choice;
+	      			System.out.println("press 1 to add a point \npress 2 to get the perimeter\npress 3 to get the area\npress 4 to quit");
+	      			choice = input.nextInt();
+	      			if(choice==1)
+	      			{
+	      			double X,Y;
+	      			Scanner x1 = new Scanner(System.in);
+	      			X = x1.nextDouble();
+	      			Scanner x2 = new Scanner(System.in);
+	      			Y = x2.nextDouble();
+	      			p.addPoint(X,Y);
+	      			}
+	      			if(choice==2)
+	      			{double peri=p.perimeter();
+	      			 System.out.println(peri);}
+	      			if(choice==3)
+	      			{double a=p.area();
+	      			 System.out.println(a);}
+	      			if(choice==4)
+	      			{break;}
+	      		}
+	      	}
+  // END OF VOID MAIN       
+	}  // END OF CLASS
+
+	class determinant
+	{     // TO CALCULATE THE DETERMINANT
+		  public static double calc(double x1, double y1,double x2,double y2) 
+		  {
+			  double determ_inant = 0.0;
+		      determ_inant = x1*y2 - x2*y1 ;
+		      return determ_inant;
+		  }        	 
+	}
+

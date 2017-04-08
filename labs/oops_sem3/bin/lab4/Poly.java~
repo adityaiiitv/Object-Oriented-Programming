@@ -1,0 +1,126 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Poly {
+
+	double perimeter, area;
+	String name;
+	private static ArrayList<Double> xc = new ArrayList<Double>();
+	private static ArrayList<Double> yc = new ArrayList<Double>();
+	
+	public Poly()
+	{
+		
+	}
+	
+	void addPoint(double x, double y)
+	{
+		xc.add(x);
+		yc.add(y);
+	}
+	
+	void addPoint(java.awt.geom.Point2D.Double xy)
+	{
+		
+	}
+	
+	double perimeter()
+	{	perimeter=0;
+		int flag=xc.size();
+		for(int i=0;i<flag;i++)
+		{	if(i!=flag-1)
+			{
+			double temp = (xc.get(i)-xc.get(i+1))*(xc.get(i)-xc.get(i+1))+(yc.get(i)-yc.get(i+1))*(yc.get(i)-yc.get(i+1));
+			double t = Math.sqrt(temp);
+			perimeter=perimeter+t;
+			
+		}
+		else if(i==flag-1)
+		{
+			double temp = (xc.get(i)-xc.get(0))*(xc.get(i)-xc.get(0))+(yc.get(i)-yc.get(0))*(yc.get(i)-yc.get(0));
+			double t = Math.sqrt(temp);
+			perimeter = perimeter + t;}
+		}
+		return perimeter;
+	}
+	
+	double area()
+	{
+		double temp=0.0,total=0.0;
+        int n=xc.size();
+        if (xc.size() >= 3)
+        {	   
+        	 for(int i=0 ; i<n ;i++)
+        	 {
+        		  if(i == n-1)
+        		  temp = determinant1.calc(xc.get(i),yc.get(i),xc.get(0),yc.get(0));	  
+        		  else
+        		  temp = determinant1.calc(xc.get(i),yc.get(i),xc.get(i+1),yc.get(i+1));		   
+        		  total += temp;        	 
+        	 }	 
+        }
+        return (total/2);
+      
+	}
+	
+	public void print(java.io.PrintStream out)
+    { 
+  	  
+  	  for(int i=0 ;i < xc.size() ; i++)
+  	  {
+  		  System.out.print("x["+(i+1)+"], y["+(i+1)+"] = ("+xc.get(i)+","+yc.get(i)+")\n");
+  	  }        	  
+  	  
+  	  
+    }
+
+
+	public static void main(String[] args)
+	{
+		Poly p = new Poly();
+		int n;
+		System.out.println("input the number of points in a polygon");
+		Scanner input = new Scanner(System.in);
+		n = input.nextInt();
+		for(int i = 0;i<n;i++)
+		{
+			double x1=input.nextDouble();
+            double y1=input.nextDouble();
+            p.addPoint(x1,y1) ;
+		}
+		int t=1;
+		while(t==1)
+		{	int choice;
+			System.out.println("press 1 to add a point \npress 2 to get the perimeter\npress 3 to get the area\npress 4 to quit");
+			choice = input.nextInt();
+			if(choice==1)
+			{
+			double X,Y;
+			Scanner x1 = new Scanner(System.in);
+			X = x1.nextDouble();
+			Scanner x2 = new Scanner(System.in);
+			Y = x2.nextDouble();
+			p.addPoint(X,Y);
+			}
+			if(choice==2)
+			{double peri=p.perimeter();
+			 System.out.println(peri);}
+			if(choice==3)
+			{double a=p.area();
+			 System.out.println(a);}
+			if(choice==4)
+			{break;}
+		}
+	}
+}
+
+class determinant1
+{     // A method to calculate the determinant of a matrix .
+	  public static double calc(double x1, double y1,double x2,double y2) 
+	  {
+		  double determ_inant = 0.0;
+	      determ_inant = x1*y2 - x2*y1 ;
+	      return determ_inant;
+	  }        	 
+}
